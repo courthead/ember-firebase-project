@@ -1,24 +1,51 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+/* eslint-env node */
+const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const envFn = require('./config/environment.js');
 
-module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
-    // Add options here
-  });
+module.exports = function (defaults) {
+  ////////////////////
+  //                //
+  //   Set Up App   //
+  //                //
+  ////////////////////
 
-  // Use `app.import` to add additional libraries to the generated
-  // output files.
-  //
-  // If you need to use different assets in different
-  // environments, specify an object as the first parameter. That
-  // object's keys should be the environment name and the values
-  // should be the asset to use in that environment.
-  //
-  // If the library that you are including contains AMD or ES6
-  // modules that you would like to import into your application
-  // please specify an object with the list of modules as keys
-  // along with the exports of each module as its value.
+  const envName = EmberApp.env();
+  const config = envFn(envName); // eslint-disable-line no-unused-vars
+  const isDevEnv = envName === 'development';
+  const isProdEnv = envName === 'production';
+  const isTestEnv = envName === 'test';
+  const options = {};
+
+  // ember-cli
+  options.minifyCSS = { enabled: isProdEnv };
+  options.sourcemaps = { enabled: isDevEnv || isTestEnv };
+
+  // ember-cli-babel
+  options['ember-cli-babel'] = { includePolyfill: true }; // async/await support
+
+  // ember-cli-sass
+  options.sassOptions = { sourceMap: isDevEnv };
+
+  // ember-cli-uglify
+  options.minifyJS = { enabled: isProdEnv };
+
+  const app = new EmberApp(defaults, options);
+
+  //////////////////////////
+  //                      //
+  //   Add Vendor Files   //
+  //                      //
+  //////////////////////////
+
+  // ...
+
+  /////////////////////
+  //                 //
+  //   Modify Tree   //
+  //                 //
+  /////////////////////
+
+  // ...
 
   return app.toTree();
 };

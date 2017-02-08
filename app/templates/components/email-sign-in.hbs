@@ -1,0 +1,28 @@
+<form disabled={{submissionInProgress}} class="email-sign-in__form" onsubmit={{action "submit"}}>
+  <div class="email-sign-in__fieldset">
+    <label class="email-sign-in__label email-sign-in__label--email">Email Address</label>
+    {{input
+        class="email-sign-in__field email-sign-in__field--email"
+        disabled=(readonly submissionInProgress)
+        focusOnInsert=true
+        maxlength=(readonly maxEmailLength)
+        placeholder="Enter email"
+        skipFocusOnInsertOnPhone=true}}
+  </div>
+
+  <div class="email-sign-in__fieldset">
+    <label class="email-sign-in__label email-sign-in__label--password">Password</label>
+    {{input
+        class="email-sign-in__field email-sign-in__field--password"
+        disabled=(readonly submissionInProgress)
+        maxlength=(readonly maxPasswordLength)
+        placeholder="Enter password"
+        type="password"}}
+  </div>
+
+  {{#if errorMessage}}
+    <p class="email-sign-in__error">{{errorMessage}}</p>
+  {{/if}}
+
+  <button class="email-sign-in__button" disabled={{submissionInProgress}}>Submit</button>
+</form>

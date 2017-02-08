@@ -1,12 +1,15 @@
-import Ember from 'ember';
-import config from './config/environment';
+import Router from 'ember-router';
+import config from 'ember-firebase-project/config/environment';
 
-const Router = Ember.Router.extend({
+const ProjectRouter = Router.extend({
   location: config.locationType,
-  rootURL: config.rootURL
+  rootURL: config.rootURL,
 });
 
-Router.map(function() {
+// eslint-disable-next-line array-callback-return
+ProjectRouter.map(function () {
+  this.route('sign-in');
+  this.route('private');
 });
 
-export default Router;
+export default ProjectRouter;
